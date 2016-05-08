@@ -35,7 +35,6 @@ def sum_matrix(a, op):
 
 def init():
 	global alpha,beta,Gamma,Phi,doc,doc_cnt;
-
 	#random start
 	beta = [];
 	for i in range(K):
