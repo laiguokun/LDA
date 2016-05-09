@@ -18,7 +18,7 @@ Z = [];
 word_topic = [];
 doc_topic = [];
 topic_cnt = [];
-
+Beta = [];
 def sum_vector(a):
 	res = 0;
 	for i in range(len(a)):
@@ -37,7 +37,7 @@ def sum_matrix(a, op):
 	return res;
 
 def init():
-	global alpha,beta,Gamma,Phi,doc,doc_cnt,Z,word_topic,doc_topic,topic_cnt;
+	global alpha,beta,Gamma,Phi,doc,doc_cnt,Z,word_topic,doc_topic,topic_cnt,Beta;
 
 	#random start
 	beta = 1;
@@ -59,11 +59,14 @@ def init():
 		topic_cnt.append(0);
 		word_topic.append([]);
 		doc_topic.append([]);
-		Gamma.append([]);
 		for v in range(voca_size):
 			word_topic[k].append(0);
 		for d in range(doc_size):
 			doc_topic[k].append(0);
+
+	for d in range(doc_size):
+		Gamma.append([]);
+		for k in range(K):
 			Gamma[d].append(0);
 
 	alpha = 1;
@@ -148,7 +151,7 @@ def sample_topic(d,i):
 
 
 def Estep(max_iter):
-	global alpha,beta,Gamma,Phi,doc,doc_cnt,Z,word_topic,doc_topic,topic_cnt;
+	global alpha,Beta,Gamma,Phi,doc,doc_cnt,Z,word_topic,doc_topic,topic_cnt;
 
 	for k in range(K):
 		topic_cnt[k] = 0;
@@ -166,6 +169,8 @@ def Estep(max_iter):
 
 	for iter_num in range(max_iter):
 		#Gibbs sampling
+		if (iter_num % 10 == 0):
+			print('*');
 		for d in range(doc_size):
 			for i in range(len(doc[d])):
 				Z[d][i] = sample_topic(d,i);
@@ -214,7 +219,7 @@ def Mstep(max_iter):
 		print('error alpha');
 
 def savemodel(num):
-	global alpha,beta,Gamma,Phi,doc,doc_cnt;
+	global alpha,Beta,Gamma,Phi,doc,doc_cnt;
 	fout = open('lda_model'+ str(num) + '.txt', 'w');
 	fout.write(str(alpha) + '\n');
 	for i in range(K):

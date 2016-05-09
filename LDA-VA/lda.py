@@ -26,10 +26,10 @@ def sum_matrix(a, op):
 	n = len(a);
 	m = len(a[0]);
 	if (op == 0):
-		for j in range(m):
+		for i in range(n):
 			res.append(0);
-			for i in range(n):
-				res[j] += a[i][j];
+			for j in range(m):
+				res[i] += a[i][j];
 
 	return res;
 
@@ -161,9 +161,9 @@ def Mstep(max_iter):
 			for n in range(len(doc[d])):
 				beta[i][doc[d][n]] += doc_cnt[d][n] * Phi[d][n][i];
 	beta_sum = sum_matrix(beta, 0);
-	for i in range(voca_size):
-		for k in range(K):
-			beta[k][i] = beta[k][i]/beta_sum[i];
+	for k in range(K):
+		for i in range(voca_size):
+			beta[k][i] = beta[k][i]/beta_sum[k];
 	#update alpha
 	last = 0;
 	iter_num = 0;
